@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+        .container{
+            width:800;
+            margin: 100px;
+        }
+        .container form{
+            margin-top:50px;
+            margin-left:-130px;
+        }
+        .actions{
+            display: flex;
+            justify-content: space-between;
+        }
+        .container h1{
+            margin-left: -130px;
+        }
+        .error_message{
+            color: red;
+        }
+        .nav{
+            width: 200px;
+            margin: 30px auto;
+            margin-left: 1050px;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .edit_pypie h2{
+            position: relative;
+            left: -130px;
+        }
+        .edit_pypie{
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <form action="/user_page" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Dashboard" class="btn btn-primary">
+        </form>
+        <form action="/log_out" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Logout" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="container">
+        <div class="edit_pypie">
+            <h2>Edit PyPie {{pypie.name}}</h2>
+            <form action="/edit_pypie_process/{{pypie.id}}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-group">
+                        <label for="disabledTextInput">Name</label>
+                        <input type="text" name="name" value="{{pypie.name}}" class="form-control" placeholder="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput">Filling</label>
+                        <input type="text" name="filling" value="{{pypie.filling}}" class="form-control" placeholder="filling">
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput">Crust</label>
+                        <input type="text" name="crust" value="{{pypie.crust}}" class="form-control" placeholder="crust">
+                    </div>
+                    
+                    <br>
+                    <button type="submit" class="btn btn-primary">Edit Pie</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

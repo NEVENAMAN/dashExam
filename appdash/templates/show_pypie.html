@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show pipe</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+        .container{
+            width:1000;
+            margin-top: 100px;
+            margin-left: 100px;
+        }
+        .nav{
+            width: 200px;
+            margin: 30px auto;
+            margin-left: 1050px;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .pypie_data{
+            width:400px;
+            margin-top:30px;
+            margin-left: 350px;
+            padding:20px;
+            border:1px solid black;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 4px 4px 4px;
+        }
+        .pypie_data #vote{
+            position: relative;
+            left:100px;
+            bottom:30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <form action="/user_page" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Dashboard" class="btn btn-primary">
+        </form>
+        <form action="/log_out" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Logout" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="container">
+        <div class="pypie_data">
+            <h3>{{pypie.name}} by {{pypie.user.first_name}}</h3><br>
+            <pre><p>{{pypie.filling}}
+{{pypie.crust}}
+            </p></pre>
+            <h5>Cast a Vote :</h5>
+            <form action="/vote/{{request.session.userid}}/{{pypie.id}}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delicise" id="submitbutton" onclick="return changeText('submitbutton');" class="btn btn-primary" style="position: relative;
+                left:70px;
+                bottom:30px;">
+            </form>
+        </div>
+    </div>
+    
+    <script type="text/javascript"> 
+        function changeText(submitId){
+            var submit = document.getElementById(submitId);
+            submit.value = 'Yuck';
+            return false;
+        };
+    </script>
+</body>
+</html>
